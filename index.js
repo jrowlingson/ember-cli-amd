@@ -340,6 +340,11 @@ module.exports = {
       scripts.push("'" + $(this).attr('src') + "'");
     });
 
+    var scriptAssertions = scriptElements.filter(function() {
+      return $(this).text().indexOf('Ember.assert') > -1;
+    });
+    scriptAssertions.remove();
+
     // We have to rebuild this index file. Cache the new properties
     config.indexHtml.scriptsAsString = scripts.join(',');
     config.indexHtml.modulesAsString = config.modules.names;
