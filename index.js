@@ -164,7 +164,8 @@ module.exports = {
         new RegExp(path.parse(outputPaths.app.js).name + '(.*js)'),
         new RegExp(path.parse(outputPaths.vendor.js).name + '(.*js)'),
         new RegExp(path.parse(outputPaths.tests.js).name + '(.*js)'),
-        new RegExp(path.parse(outputPaths.testSupport.js.testSupport).name + '(.*js)')
+        new RegExp(path.parse(outputPaths.testSupport.js.testSupport).name + '(.*js)'),
+        new RegExp(path.parse(outputPaths.app.html).name + '(.*html)')
       ],
       patterns: [{
         match: /([^A-Za-z0-9_#]|^|["])define(\W|["]|$)/g,
@@ -332,7 +333,8 @@ module.exports = {
     var scriptElements = $('body > script');
     var scripts = [];
     var scriptsWithSrc = scriptElements.filter(function () {
-      return $(this).attr('src') !== undefined;
+      var srcAttribute = $(this).attr('src');
+      return  srcAttribute !== undefined && srcAttribute !=='/testem.js';
     });
     scriptsWithSrc.each(function () {
       scripts.push("'" + $(this).attr('src') + "'");
