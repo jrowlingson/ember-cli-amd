@@ -419,7 +419,9 @@ module.exports = {
       return "'" + module + "'";
     });
     var adoptables = names.map(function (name, i) {
-      return '{name:' + name + ',obj: new Promise(function(resolve, reject){ require([' + name + '], function(mod) { resolve(mod); }); }) }';
+      return '{name:' + name + ',obj: function() {' +
+        'return new Promise(function(resolve, reject){ require([' + name + '], function(mod) { resolve(mod); }); });' +
+        '}}';
     });
 
     return {
