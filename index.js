@@ -349,9 +349,6 @@ module.exports = {
     config.indexHtml.scriptsAsString = scripts.join(',');
     config.indexHtml.modulesAsString = config.modules.names;
 
-    // Remove the scripts tagcd
-    scriptsWithSrc.remove();
-
     // Add the amd config
     var amdScripts = '';
     if (this.app.options.amd.configPath) {
@@ -396,7 +393,7 @@ module.exports = {
     }
 
     // Add the scripts to the body
-    $('body').prepend(amdScripts);
+    $('body').append(amdScripts);
 
     // Beautify the index.html
     var html = beautify_html($.html(), {
@@ -422,7 +419,7 @@ module.exports = {
       return "'" + module + "'";
     });
     var adoptables = names.map(function (name, i) {
-      return '{name:' + name + ',obj:' + objs[i] + '}';
+      return '{name:' + name + ',obj: new Promise(function(resolve, reject){ require([' + name + '], function(mod) { resolve(mod); }); }) }';
     });
 
     return {
